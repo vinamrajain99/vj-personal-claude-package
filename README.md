@@ -4,6 +4,8 @@ Vinamra Jain's personal bundle of Claude skills. The single source of truth is t
 
 ## What's inside
 
+### Skills (auto-trigger when you describe a relevant task)
+
 | Skill | What it does | Typical trigger phrases |
 |---|---|---|
 | **fundamental-analysis** | Produces an investment-grade fundamental analysis of a publicly listed equity — executive summary upfront, detailed report below, with verdict, fair value range, moats, financials, management, risks. | "should I invest in [ticker]", "fundamental analysis of [company]", "deep dive on [stock]", "is [ticker] fairly valued" |
@@ -11,6 +13,12 @@ Vinamra Jain's personal bundle of Claude skills. The single source of truth is t
 | **resume-tailor** | Tailors a resume to a specific job listing — analyses JD, researches the company, suggests targeted edits to maximise interview chances. | "tailor my resume", "optimize resume for job", "help me apply to [company]" |
 | **supabase** | General-purpose Supabase development helper across Database, Auth, Edge Functions, Realtime, Storage, Vectors, Cron, Queues, and client libraries. | Any task involving Supabase products, `supabase-js`, `@supabase/ssr`, RLS, migrations, CLI, MCP |
 | **supabase-postgres-best-practices** | Postgres performance and best-practices guide from Supabase — query optimisation, schema design, connection management, locking, indexing, security. | Writing, reviewing, or optimising Postgres queries or schemas |
+
+### Slash commands (user-invoked)
+
+| Command | What it does |
+|---|---|
+| `/save-progress` | Updates `CLAUDE.md`, `TODO.md`, `PROGRESS.md`, and `DECISIONS.md` with current session work so the next session can pick up seamlessly. Designed for end-of-session handoff. |
 
 ## How distribution works
 
@@ -49,6 +57,8 @@ vj-personal-claude-package/
 │       └── build-plugin.yml # auto-builds .plugin on push & tags
 ├── .gitignore
 ├── README.md
+├── commands/
+│   └── save-progress.md     # slash command (legacy single-file format)
 └── skills/
     ├── fundamental-analysis/
     │   └── SKILL.md
