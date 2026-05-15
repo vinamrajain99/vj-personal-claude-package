@@ -37,7 +37,40 @@ That's it. Future updates flow in via `/plugin marketplace update`.
 2. Download `vj-personal-claude-package.plugin` from the latest release.
 3. Drag it onto the Claude desktop app window (or use Customize → install plugin).
 
-## Updating a skill — end-to-end
+## Repo layout (for reference)
+
+```
+vj-personal-claude-package/
+├── .claude-plugin/
+│   ├── marketplace.json     # makes this repo installable via /plugin marketplace add
+│   └── plugin.json          # plugin manifest (name, version, author)
+├── .github/
+│   └── workflows/
+│       └── build-plugin.yml # auto-builds .plugin on push & tags
+├── .gitignore
+├── README.md
+└── skills/
+    ├── fundamental-analysis/
+    │   └── SKILL.md
+    ├── pr-description/
+    │   └── SKILL.md
+    ├── resume-tailor/
+    │   └── SKILL.md
+    ├── supabase/
+    │   ├── SKILL.md
+    │   ├── references/
+    │   └── assets/
+    └── supabase-postgres-best-practices/
+        ├── SKILL.md
+        └── references/
+```
+
+## Sources & credits
+
+- `supabase` and `supabase-postgres-best-practices` skills originate from Supabase (MIT-licensed, bundled here for personal use).
+- All other skills are personal.
+
+## How I keep this updated
 
 This workflow assumes nothing is set up locally. Start anywhere.
 
@@ -101,11 +134,11 @@ The Action takes ~30 seconds to build the `.plugin` and attach it to the Release
 
 Your working clone at `~/code/vj-personal-claude-package` can stay for next time, or be deleted — the repo is the source of truth either way. Re-clone whenever you need it.
 
-## Adding a new skill — end-to-end
+## How I add new skills
 
 Same flow as updating, with one extra step at the start.
 
-### 1. Get a working copy (see Step 1 above)
+### 1. Get a working copy (see Step 1 of "How I keep this updated" above)
 
 ### 2. Create the new skill folder
 
@@ -135,37 +168,4 @@ Add a row to the "What's inside" table at the top so future-you remembers what t
 
 ### 4. Bump the version, commit, push, tag, propagate
 
-Follow Steps 3–5 of the "Updating a skill" flow.
-
-## Repo layout (for reference)
-
-```
-vj-personal-claude-package/
-├── .claude-plugin/
-│   ├── marketplace.json     # makes this repo installable via /plugin marketplace add
-│   └── plugin.json          # plugin manifest (name, version, author)
-├── .github/
-│   └── workflows/
-│       └── build-plugin.yml # auto-builds .plugin on push & tags
-├── .gitignore
-├── README.md
-└── skills/
-    ├── fundamental-analysis/
-    │   └── SKILL.md
-    ├── pr-description/
-    │   └── SKILL.md
-    ├── resume-tailor/
-    │   └── SKILL.md
-    ├── supabase/
-    │   ├── SKILL.md
-    │   ├── references/
-    │   └── assets/
-    └── supabase-postgres-best-practices/
-        ├── SKILL.md
-        └── references/
-```
-
-## Sources & credits
-
-- `supabase` and `supabase-postgres-best-practices` skills originate from Supabase (MIT-licensed, bundled here for personal use).
-- All other skills are personal.
+Follow Steps 3–5 of the "How I keep this updated" flow.
