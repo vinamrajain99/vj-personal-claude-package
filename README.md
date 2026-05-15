@@ -18,8 +18,6 @@ Vinamra Jain's personal bundle of Claude skills. The single source of truth is t
 - **Claude Code** (CLI + in-app) pulls directly from GitHub via a single-plugin marketplace. Its local copy lives in `~/.claude/plugins/cache/` and is managed automatically — never edit it by hand.
 - **Cowork** (desktop app) installs from a `.plugin` zip. A GitHub Action builds and attaches that zip to every release. To update Cowork you download the latest `.plugin` from the Releases page and drag it into the app.
 
-> Replace `<your-github-username>` with your actual GitHub handle throughout this README on first read.
-
 ## Installation
 
 ### Claude Code (CLI in terminal, and Claude Code inside the desktop app)
@@ -27,7 +25,7 @@ Vinamra Jain's personal bundle of Claude skills. The single source of truth is t
 In any session:
 
 ```
-/plugin marketplace add <your-github-username>/vj-personal-claude-package
+/plugin marketplace add vinamrajain99/vj-personal-claude-package
 /plugin install vj-personal-claude-package@vj-personal-claude-package
 ```
 
@@ -35,7 +33,7 @@ That's it. Future updates flow in via `/plugin marketplace update`.
 
 ### Cowork (Claude desktop app)
 
-1. Go to `https://github.com/<your-github-username>/vj-personal-claude-package/releases`.
+1. Go to `https://github.com/vinamrajain99/vj-personal-claude-package/releases`.
 2. Download `vj-personal-claude-package.plugin` from the latest release.
 3. Drag it onto the Claude desktop app window (or use Customize → install plugin).
 
@@ -48,7 +46,7 @@ This workflow assumes nothing is set up locally. Start anywhere.
 **If you've never cloned it on this machine:**
 
 ```bash
-git clone https://github.com/<your-github-username>/vj-personal-claude-package.git \
+git clone https://github.com/vinamrajain99/vj-personal-claude-package.git \
   ~/code/vj-personal-claude-package
 cd ~/code/vj-personal-claude-package
 ```
@@ -96,7 +94,7 @@ The Action takes ~30 seconds to build the `.plugin` and attach it to the Release
 
 **Cowork** (desktop app):
 
-1. Open `https://github.com/<your-github-username>/vj-personal-claude-package/releases` and download the newly-tagged `vj-personal-claude-package.plugin`.
+1. Open `https://github.com/vinamrajain99/vj-personal-claude-package/releases` and download the newly-tagged `vj-personal-claude-package.plugin`.
 2. Drag it onto the Claude desktop app to overwrite the previous install.
 
 ### 6. (Optional) Tidy up
