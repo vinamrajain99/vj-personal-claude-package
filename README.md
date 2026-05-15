@@ -1,6 +1,6 @@
 # VJ Personal Claude Package
 
-Vinamra Jain's personal bundle of Claude skills. Install this plugin once in each Claude surface (Claude Code CLI, Claude Code in the desktop app, and Cowork) to get a consistent skill set everywhere.
+Vinamra Jain's personal bundle of Claude skills. The single source of truth is this GitHub repo. Install it once in each Claude surface (Claude Code CLI, Claude Code inside the desktop app, and Cowork) to get a consistent skill set everywhere.
 
 ## What's inside
 
@@ -12,72 +12,160 @@ Vinamra Jain's personal bundle of Claude skills. Install this plugin once in eac
 | **supabase** | General-purpose Supabase development helper across Database, Auth, Edge Functions, Realtime, Storage, Vectors, Cron, Queues, and client libraries. | Any task involving Supabase products, `supabase-js`, `@supabase/ssr`, RLS, migrations, CLI, MCP |
 | **supabase-postgres-best-practices** | Postgres performance and best-practices guide from Supabase — query optimisation, schema design, connection management, locking, indexing, security. | Writing, reviewing, or optimising Postgres queries or schemas |
 
+## How distribution works
+
+- **Source of truth**: this GitHub repo. All edits happen here.
+- **Claude Code** (CLI + in-app) pulls directly from GitHub via a single-plugin marketplace. Its local copy lives in `~/.claude/plugins/cache/` and is managed automatically — never edit it by hand.
+- **Cowork** (desktop app) installs from a `.plugin` zip. A GitHub Action builds and attaches that zip to every release. To update Cowork you download the latest `.plugin` from the Releases page and drag it into the app.
+
+> Replace `<your-github-username>` with your actual GitHub handle throughout this README on first read.
+
 ## Installation
 
-### Claude Code (CLI in terminal)
+### Claude Code (CLI in terminal, and Claude Code inside the desktop app)
 
-```bash
-# From wherever the .plugin file is on disk:
-/plugin install /path/to/vj-personal-claude-package.plugin
+In any session:
+
+```
+/plugin marketplace add <your-github-username>/vj-personal-claude-package
+/plugin install vj-personal-claude-package@vj-personal-claude-package
 ```
 
-Or unzip directly into the user-level skills folder:
-
-```bash
-mkdir -p ~/.claude/skills
-unzip vj-personal-claude-package.plugin -d /tmp/vj-plugin
-cp -R /tmp/vj-plugin/skills/* ~/.claude/skills/
-```
+That's it. Future updates flow in via `/plugin marketplace update`.
 
 ### Cowork (Claude desktop app)
 
-Drag the `.plugin` file into the desktop app, or use the Customize → install plugin button.
+1. Go to `https://github.com/<your-github-username>/vj-personal-claude-package/releases`.
+2. Download `vj-personal-claude-package.plugin` from the latest release.
+3. Drag it onto the Claude desktop app window (or use Customize → install plugin).
 
-### Claude Code inside the desktop app
+## Updating a skill — end-to-end
 
-Same as the CLI install above — it reads from the same `~/.claude/skills/` and `~/.claude/plugins/` locations.
+This workflow assumes nothing is set up locally. Start anywhere.
 
-## Layout
+### 1. Get a working copy of the repo
+
+**If you've never cloned it on this machine:**
+
+```bash
+git clone https://github.com/<your-github-username>/vj-personal-claude-package.git \
+  ~/code/vj-personal-claude-package
+cd ~/code/vj-personal-claude-package
+```
+
+`~/code/` is just a suggestion. Pick any directory you like for your working copy — but do **not** put it inside `~/.claude/` (that's where the installed copy lives, and the two would conflict).
+
+**If you already have a clone:**
+
+```bash
+cd ~/code/vj-personal-claude-package && git pull
+```
+
+### 2. Edit the skill
+
+Open `skills/<skill-name>/SKILL.md` and make your changes. References under `skills/<skill-name>/references/` are fair game too.
+
+### 3. Bump the version
+
+Edit both manifest files and increment the version (e.g., `0.1.0` → `0.1.1`):
+
+- `.claude-plugin/plugin.json` — bump `version`
+- `.claude-plugin/marketplace.json` — bump `metadata.version` **and** the `version` of the entry inside the `plugins` array
+
+### 4. Commit, push, tag
+
+```bash
+git add .
+git commit -m "Improve <skill-name>: <what changed>"
+git push
+
+# Cut a release so the GitHub Action builds a fresh .plugin
+git tag v0.1.1
+git push --tags
+```
+
+The Action takes ~30 seconds to build the `.plugin` and attach it to the Release.
+
+### 5. Propagate to your installs
+
+**Claude Code** (CLI + in-app), in any session:
+
+```
+/plugin marketplace update vj-personal-claude-package
+```
+
+**Cowork** (desktop app):
+
+1. Open `https://github.com/<your-github-username>/vj-personal-claude-package/releases` and download the newly-tagged `vj-personal-claude-package.plugin`.
+2. Drag it onto the Claude desktop app to overwrite the previous install.
+
+### 6. (Optional) Tidy up
+
+Your working clone at `~/code/vj-personal-claude-package` can stay for next time, or be deleted — the repo is the source of truth either way. Re-clone whenever you need it.
+
+## Adding a new skill — end-to-end
+
+Same flow as updating, with one extra step at the start.
+
+### 1. Get a working copy (see Step 1 above)
+
+### 2. Create the new skill folder
+
+```bash
+cd ~/code/vj-personal-claude-package
+mkdir -p skills/<new-skill-name>
+```
+
+Inside `skills/<new-skill-name>/SKILL.md`, start with valid YAML frontmatter:
+
+```yaml
+---
+name: <new-skill-name>
+description: One-paragraph description with specific trigger phrases. Be opinionated about when this skill should fire; the description is the primary mechanism for auto-triggering.
+---
+
+# <Human-readable title>
+
+Instructions to Claude on how to perform the task. Imperative voice; explain the why where it helps.
+```
+
+Add `references/` and `assets/` subfolders if the skill needs supporting files.
+
+### 3. Update this README
+
+Add a row to the "What's inside" table at the top so future-you remembers what this skill does and how to trigger it.
+
+### 4. Bump the version, commit, push, tag, propagate
+
+Follow Steps 3–5 of the "Updating a skill" flow.
+
+## Repo layout (for reference)
 
 ```
 vj-personal-claude-package/
 ├── .claude-plugin/
-│   └── plugin.json
-├── skills/
-│   ├── fundamental-analysis/
-│   │   └── SKILL.md
-│   ├── pr-description/
-│   │   └── SKILL.md
-│   ├── resume-tailor/
-│   │   └── SKILL.md
-│   ├── supabase/
-│   │   ├── SKILL.md
-│   │   ├── references/
-│   │   └── assets/
-│   └── supabase-postgres-best-practices/
-│       ├── SKILL.md
-│       └── references/
-└── README.md
+│   ├── marketplace.json     # makes this repo installable via /plugin marketplace add
+│   └── plugin.json          # plugin manifest (name, version, author)
+├── .github/
+│   └── workflows/
+│       └── build-plugin.yml # auto-builds .plugin on push & tags
+├── .gitignore
+├── README.md
+└── skills/
+    ├── fundamental-analysis/
+    │   └── SKILL.md
+    ├── pr-description/
+    │   └── SKILL.md
+    ├── resume-tailor/
+    │   └── SKILL.md
+    ├── supabase/
+    │   ├── SKILL.md
+    │   ├── references/
+    │   └── assets/
+    └── supabase-postgres-best-practices/
+        ├── SKILL.md
+        └── references/
 ```
-
-## Updating a skill
-
-1. Edit the relevant `SKILL.md` (or files under `references/`) in the plugin source folder.
-2. Bump the `version` field in `.claude-plugin/plugin.json` (e.g., `0.1.0` → `0.1.1`).
-3. Re-package:
-   ```bash
-   cd "$HOME/Desktop/Claude-Work/Skills temp folder"
-   rm -f vj-personal-claude-package.plugin
-   (cd vj-personal-claude-package && zip -r /tmp/vj-personal-claude-package.plugin . -x "*.DS_Store")
-   mv /tmp/vj-personal-claude-package.plugin .
-   ```
-4. Re-install the updated `.plugin` file in each surface.
-
-## Adding a new skill
-
-1. Create `skills/<new-skill-name>/SKILL.md` inside the plugin folder. The `SKILL.md` must start with YAML frontmatter containing at least `name` and `description`.
-2. Add the skill to the table in this README.
-3. Bump the version, repackage, reinstall (see above).
 
 ## Sources & credits
 
