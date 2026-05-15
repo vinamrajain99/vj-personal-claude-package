@@ -1,0 +1,19 @@
+{
+  "name": "vj-personal-claude-package",
+  "owner": {
+    "name": "Vinamra Jain",
+    "email": "vinamrajain99@gmail.com"
+  },
+  "metadata": {
+    "description": "Vinamra's personal Claude plugins — investment research, code review, resume tailoring, and Supabase development.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "vj-personal-claude-package",
+      "source": ".",
+      "description": "Personal Claude skills bundle: fundamental-analysis, pr-description, resume-tailor, supabase, supabase-postgres-best-practices.",
+      "version": "0.1.0"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+name: Build .plugin artifact
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Read plugin name and version
+        id: meta
+        run: |
+          NAME=$(python3 -c "import json; print(json.load(open('.claude-plugin/plugin.json'))['name'])")
+          VERSION=$(python3 -c "import json; print(json.load(open('.claude-plugin/plugin.json')).get('version','0.0.0'))")
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Build .plugin zip
+        run: |
+          zip -qr "${{ steps.meta.outputs.name }}.plugin" . \
+            -x "*.DS_Store" "*.git/*" ".github/*" "*.github*"
+          ls -la *.plugin
+
+      - name: Upload artifact (every push)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.meta.outputs.name }}-${{ steps.meta.outputs.version }}
+          path: ${{ steps.meta.outputs.name }}.plugin
+
+      - name: Attach to GitHub Release (only on version tag)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ steps.meta.outputs.name }}.plugin

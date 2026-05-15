@@ -1,0 +1,17 @@
+{
+  "name": "vj-personal-claude-package",
+  "version": "0.1.0",
+  "description": "Vinamra's personal Claude skills bundle — investment research, code review, resume tailoring, and Supabase development guidance.",
+  "author": {
+    "name": "Vinamra Jain",
+    "email": "vinamrajain99@gmail.com"
+  },
+  "keywords": [
+    "personal",
+    "fundamental-analysis",
+    "pr-description",
+    "resume-tailor",
+    "supabase",
+    "postgres"
+  ]
+}
