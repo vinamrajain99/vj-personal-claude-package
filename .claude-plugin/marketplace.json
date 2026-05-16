@@ -11,7 +11,7 @@
   "plugins": [
     {
       "name": "vj-personal-claude-package",
-      "source": ".",
+      "source": "./",
       "description": "Personal Claude skills bundle plus a save-progress slash command: fundamental-analysis, pr-description, resume-tailor, supabase, supabase-postgres-best-practices, /save-progress.",
       "version": "0.2.0"
     }
