@@ -1,6 +1,6 @@
 # VJ Personal Claude Package
 
-Vinamra Jain's personal bundle of Claude skills. The single source of truth is this GitHub repo. Install it once in each Claude surface (Claude Code CLI, Claude Code inside the desktop app, and Cowork) to get a consistent skill set everywhere.
+A personal bundle of Claude skills. The single source of truth is this GitHub repo. Install it once in each Claude surface (Claude Code CLI, Claude Code inside the desktop app, and Cowork) to get a consistent skill set everywhere.
 
 ## What's inside
 

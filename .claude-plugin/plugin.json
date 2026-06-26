@@ -1,9 +1,9 @@
 {
   "name": "vj-personal-claude-package",
   "version": "0.2.0",
-  "description": "Vinamra's personal Claude skills and commands bundle — investment research, code review, resume tailoring, Supabase development guidance, and session handoff.",
+  "description": "Personal Claude skills and commands bundle — investment research, code review, resume tailoring, Supabase development guidance, and session handoff.",
   "author": {
-    "name": "Vinamra Jain",
+    "name": "VJ",
     "email": "vinamrajain99@gmail.com"
   },
   "keywords": [
